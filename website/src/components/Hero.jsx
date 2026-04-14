@@ -1,19 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Hero.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const FRAME_COUNT = 40;
 
 const Hero = () => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
+  
+  const phase1Ref = useRef(null);
+  const phase2Ref = useRef(null);
+  const phase3Ref = useRef(null);
+
   const [images, setImages] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  
-  // Caching dom dimensions
-  const dimsRef = useRef({ top: 0, height: 1 });
-  // Caching last drawn frame index
+
   const lastDrawnFrameRef = useRef(-1);
 
   // Preload images
@@ -38,135 +43,132 @@ const Hero = () => {
     setImages(loadedImages);
   }, []);
 
-  // Update dimensions only on resize / mount
-  const updateDimensions = () => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      dimsRef.current = {
-        top: window.scrollY + rect.top,
-        height: rect.height - window.innerHeight
-      };
-    }
-  };
-
   useEffect(() => {
-    if (!loaded) return;
-    
-    // Initial calculation
-    updateDimensions();
+    if (!loaded || images.length === 0) return;
 
-    let ticking = false;
+    let ctx = gsap.context(() => {
+      const drawFrame = (frameIndex) => {
+        if (frameIndex === lastDrawnFrameRef.current) return;
+        lastDrawnFrameRef.current = frameIndex;
 
-    const handleScroll = () => {
-      if (!canvasRef.current || dimsRef.current.height <= 0) return;
-      
-      const scrollTop = window.scrollY;
-      const { top, height } = dimsRef.current;
-      
-      let progress = (scrollTop - top) / height;
-      progress = Math.max(0, Math.min(1, progress));
-      setScrollProgress(progress);
-
-      const frameIndex = Math.min(
-        FRAME_COUNT - 1,
-        Math.floor(progress * FRAME_COUNT)
-      );
-
-      // PERFECT SYNCHRONIZATION: Only redraw if the frame actually changed!
-      if (frameIndex === lastDrawnFrameRef.current) return;
-      lastDrawnFrameRef.current = frameIndex;
-
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d', { alpha: false }); // Optimize 2d drawing
-      const currentImage = images[frameIndex];
-      
-      if (currentImage) {
+        const canvas = canvasRef.current;
+        if(!canvas) return;
+        const context = canvas.getContext('2d', { alpha: false });
+        const currentImage = images[frameIndex];
         
-        const canvasAspect = canvas.width / canvas.height;
-        const imgAspect = currentImage.width / currentImage.height;
-        
-        let drawWidth, drawHeight, offsetX, offsetY;
-        
-        // Cover logic for premium full screen aesthetic
-        if (canvasAspect > imgAspect) {
-          drawWidth = canvas.width;
-          drawHeight = currentImage.height * (canvas.width / currentImage.width);
-          offsetX = 0;
-          offsetY = (canvas.height - drawHeight) / 2;
-        } else {
-          drawHeight = canvas.height;
-          drawWidth = currentImage.width * (canvas.height / currentImage.height);
-          offsetX = (canvas.width - drawWidth) / 2;
-          offsetY = 0;
+        if (currentImage) {
+          const canvasAspect = canvas.width / canvas.height;
+          const imgAspect = currentImage.width / currentImage.height;
+          
+          let drawWidth, drawHeight, offsetX, offsetY;
+          
+          if (canvasAspect > imgAspect) {
+            drawWidth = canvas.width;
+            drawHeight = currentImage.height * (canvas.width / currentImage.width);
+            offsetX = 0;
+            offsetY = (canvas.height - drawHeight) / 2;
+          } else {
+            drawHeight = canvas.height;
+            drawWidth = currentImage.width * (canvas.height / currentImage.height);
+            offsetX = (canvas.width - drawWidth) / 2;
+            offsetY = 0;
+          }
+          
+          drawWidth = Math.round(drawWidth);
+          drawHeight = Math.round(drawHeight);
+          offsetX = Math.round(offsetX);
+          offsetY = Math.round(offsetY);
+          
+          context.fillStyle = '#0a0a0a';
+          context.fillRect(0, 0, canvas.width, canvas.height);
+          
+          context.imageSmoothingEnabled = true;
+          context.imageSmoothingQuality = 'high';
+          
+          context.drawImage(currentImage, offsetX, offsetY, drawWidth, drawHeight);
         }
-        
-        // Anti-aliasing / Sub-pixel blur fix: Round to exact integer coordinates
-        drawWidth = Math.round(drawWidth);
-        drawHeight = Math.round(drawHeight);
-        offsetX = Math.round(offsetX);
-        offsetY = Math.round(offsetY);
-        
-        // Fast clear
-        ctx.fillStyle = '#0a0a0a';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // VERY IMPORTANT: Prevent pixelation and ensure sharp downscaling
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        
-        ctx.drawImage(currentImage, offsetX, offsetY, drawWidth, drawHeight);
-      }
-    };
+      };
 
-    // First draw
-    handleScroll();
+      const resizeCanvas = () => {
+        const canvas = canvasRef.current;
+        if(!canvas) return;
+        const parent = canvas.parentElement;
+        const width = parent.clientWidth;
+        const height = parent.clientHeight;
+        const pxRatio = Math.min(window.devicePixelRatio || 1, 2); 
 
-    const scrollListener = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+        canvas.width = width * pxRatio;
+        canvas.height = height * pxRatio;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
 
-    window.addEventListener('scroll', scrollListener, { passive: true });
-    
-    // Resize requires recalculating dimensions
-    window.addEventListener('resize', updateDimensions);
-    
-    return () => {
-      window.removeEventListener('scroll', scrollListener);
-      window.removeEventListener('resize', updateDimensions);
-    };
+        lastDrawnFrameRef.current = -1;
+        drawFrame(0);
+      };
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0, 
+        onUpdate: (self) => {
+          const frameIndex = Math.min(
+            FRAME_COUNT - 1,
+            Math.floor(self.progress * (FRAME_COUNT - 1))
+          );
+          drawFrame(frameIndex);
+
+          const progress = self.progress;
+
+          if (phase1Ref.current) {
+            if (progress < 0.30) {
+              phase1Ref.current.style.opacity = 1;
+              phase1Ref.current.style.zIndex = 10;
+              phase1Ref.current.style.transform = `translate3d(0, ${progress * 100}px, 0) scale(${1 - progress * 0.1})`;
+            } else {
+              phase1Ref.current.style.opacity = 0;
+              phase1Ref.current.style.zIndex = -1;
+            }
+          }
+
+          if (phase2Ref.current) {
+            if (progress >= 0.30 && progress <= 0.60) {
+              const p2Progress = (progress - 0.30) / 0.30;
+              const opacity = p2Progress < 0.2 ? p2Progress * 5 : p2Progress > 0.8 ? (1 - p2Progress) * 5 : 1;
+              phase2Ref.current.style.opacity = opacity;
+              phase2Ref.current.style.zIndex = 10;
+              phase2Ref.current.style.transform = `translate3d(0, ${(1 - p2Progress) * 30}px, 0)`;
+            } else {
+              phase2Ref.current.style.opacity = 0;
+              phase2Ref.current.style.zIndex = -1;
+            }
+          }
+
+          if (phase3Ref.current) {
+            if (progress > 0.60) {
+              const p3Progress = (progress - 0.60) / 0.40;
+              const opacity = Math.min(1, p3Progress * 3);
+              phase3Ref.current.style.opacity = opacity;
+              phase3Ref.current.style.zIndex = 10;
+              phase3Ref.current.style.transform = `translate3d(0, ${(1 - opacity) * 30}px, 0)`;
+            } else {
+              phase3Ref.current.style.opacity = 0;
+              phase3Ref.current.style.zIndex = -1;
+            }
+          }
+        }
+      });
+
+      return () => {
+        window.removeEventListener('resize', resizeCanvas);
+      };
+    });
+
+    return () => ctx.revert();
   }, [loaded, images]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const resizeCanvas = () => {
-      const parent = canvas.parentElement;
-      const width = parent.clientWidth;
-      const height = parent.clientHeight;
-      // High pixel density support for 4K Retina displays
-      const pxRatio = window.devicePixelRatio || 1;
-
-      canvas.width = width * pxRatio;
-      canvas.height = height * pxRatio;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
-      updateDimensions();
-      lastDrawnFrameRef.current = -1; // Force a complete redraw event
-      window.dispatchEvent(new Event('scroll'));
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    return () => window.removeEventListener('resize', resizeCanvas);
-  }, [loaded]);
 
   if (!loaded) {
     return (
@@ -187,21 +189,18 @@ const Hero = () => {
         <div className="hero-gradient-overlay"></div>
         
         <div className="hero-hud">
-          {/* Phase 1: 0% - 30% */}
-          <div className={`hud-phase ${scrollProgress < 0.30 ? 'visible' : 'hidden'}`}>
+          <div className="hud-phase" ref={phase1Ref} style={{ willChange: 'transform, opacity', position: 'absolute' }}>
             <h1 className="hud-title">750S</h1>
             <p className="hud-subtitle">The Benchmark. Elevated.</p>
             <button className="hud-btn">DISCOVER</button>
           </div>
 
-          {/* Phase 2: 30% - 60% */}
-          <div className={`hud-phase ${scrollProgress >= 0.30 && scrollProgress <= 0.60 ? 'visible' : 'hidden'}`}>
+          <div className="hud-phase" ref={phase2Ref} style={{ opacity: 0, willChange: 'transform, opacity', position: 'absolute' }}>
             <h1 className="hud-title">AERO</h1>
             <p className="hud-subtitle">Sculpted for Velocity</p>
           </div>
 
-          {/* Phase 3: 60% - 100% */}
-          <div className={`hud-phase ${scrollProgress > 0.60 ? 'visible' : 'hidden'}`}>
+          <div className="hud-phase" ref={phase3Ref} style={{ opacity: 0, willChange: 'transform, opacity', position: 'absolute' }}>
             <h1 className="hud-title">POWER</h1>
             <ul className="hud-specs">
               <li><span>Engine</span> V8 Hybrid</li>
