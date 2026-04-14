@@ -10,41 +10,52 @@ const Specs = () => {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
+      let mm = gsap.matchMedia();
       const items = gsap.utils.toArray('.spec-item');
       const fills = gsap.utils.toArray('.spec-fill');
-      
-      gsap.fromTo(items, 
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
 
-      // Animate the bars filling up
-      fills.forEach((fill) => {
-        const width = fill.getAttribute('data-width');
-        gsap.fromTo(fill,
-          { width: '0%' },
-          {
-            width: width,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 70%',
-              toggleActions: 'play none none reverse'
+      mm.add("(min-width: 769px)", () => {
+        gsap.set(items, { y: 30, opacity: 0 });
+        ScrollTrigger.batch(items, {
+          interval: 0.1,
+          batchMax: 4,
+          onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power2.out', overwrite: true }),
+          onLeaveBack: batch => gsap.to(batch, { opacity: 0, y: 30, stagger: 0.1, duration: 0.4, ease: 'power2.out', overwrite: true }),
+          start: 'top 85%'
+        });
+
+        fills.forEach((fill) => {
+          const width = fill.getAttribute('data-width');
+          gsap.fromTo(fill,
+            { width: '0%' },
+            {
+              width: width, duration: 1, ease: 'power3.out',
+              scrollTrigger: { trigger: containerRef.current, start: 'top 75%', toggleActions: 'play none none reverse' }
             }
-          }
-        );
+          );
+        });
+      });
+
+      mm.add("(max-width: 768px)", () => {
+        gsap.set(items, { y: 15, opacity: 0 });
+        ScrollTrigger.batch(items, {
+          interval: 0.1,
+          batchMax: 2,
+          onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out', overwrite: true }),
+          onLeaveBack: batch => gsap.to(batch, { opacity: 0, y: 15, stagger: 0.1, duration: 0.3, ease: 'power2.out', overwrite: true }),
+          start: 'top 90%'
+        });
+
+        fills.forEach((fill) => {
+          const width = fill.getAttribute('data-width');
+          gsap.fromTo(fill,
+            { width: '0%' },
+            {
+              width: width, duration: 0.6, ease: 'power3.out',
+              scrollTrigger: { trigger: fill.parentElement, start: 'top 90%', toggleActions: 'play none none reverse' }
+            }
+          );
+        });
       });
     }, containerRef);
     

@@ -10,23 +10,30 @@ const Features = () => {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
+      let mm = gsap.matchMedia();
       const cards = gsap.utils.toArray('.feature-card');
       
-      gsap.fromTo(cards, 
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
+      mm.add("(min-width: 769px)", () => {
+        gsap.set(cards, { y: 50, opacity: 0 });
+        ScrollTrigger.batch(cards, {
+          interval: 0.1,
+          batchMax: 3,
+          onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, overwrite: true, duration: 0.6, ease: 'power2.out' }),
+          onLeaveBack: batch => gsap.to(batch, { opacity: 0, y: 50, stagger: 0.1, overwrite: true, duration: 0.4, ease: 'power2.out' }),
+          start: 'top 85%',
+        });
+      });
+
+      mm.add("(max-width: 768px)", () => {
+        gsap.set(cards, { y: 20, opacity: 0 });
+        ScrollTrigger.batch(cards, {
+          interval: 0.1,
+          batchMax: 1,
+          onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.1, overwrite: true, duration: 0.5, ease: 'power2.out' }),
+          onLeaveBack: batch => gsap.to(batch, { opacity: 0, y: 20, stagger: 0.1, overwrite: true, duration: 0.3, ease: 'power2.out' }),
+          start: 'top 90%',
+        });
+      });
     }, containerRef);
     
     return () => ctx.revert();

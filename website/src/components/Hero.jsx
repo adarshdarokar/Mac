@@ -106,8 +106,14 @@ const Hero = () => {
         drawFrame(0);
       };
 
+      let resizeTimeout;
+      const debouncedResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(resizeCanvas, 150);
+      };
+
       resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('resize', debouncedResize, { passive: true });
 
       ScrollTrigger.create({
         trigger: containerRef.current,
@@ -163,7 +169,8 @@ const Hero = () => {
       });
 
       return () => {
-        window.removeEventListener('resize', resizeCanvas);
+        window.removeEventListener('resize', debouncedResize);
+        clearTimeout(resizeTimeout);
       };
     });
 

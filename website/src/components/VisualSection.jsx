@@ -12,24 +12,28 @@ const VisualSection = () => {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // Very subtle parallax for the image
-      gsap.fromTo(imageRef.current,
-        {
-          yPercent: -15
-        },
-        {
-          yPercent: 15,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
-          }
-        }
-      );
+      let mm = gsap.matchMedia();
 
-      // Fade up text reveal
+      mm.add("(min-width: 769px)", () => {
+        gsap.fromTo(imageRef.current,
+          { yPercent: -10 },
+          {
+            yPercent: 10,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true
+            }
+          }
+        );
+      });
+
+      mm.add("(max-width: 768px)", () => {
+         gsap.set(imageRef.current, { yPercent: 0 });
+      });
+
       gsap.fromTo(textRef.current,
         { y: 50, opacity: 0 },
         {
