@@ -14,7 +14,7 @@
 
 .navbar.scrolled {
   padding: 1.5rem 5%;
-  background: rgba(10, 10, 10, 0.95);
+  background: rgba(30, 31, 34, 0.95);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -40,7 +40,7 @@
 }
 
 .navbar-menu a {
-  color: #a0a0a0;
+  color: var(--color-gray);
   text-decoration: none;
   font-family: 'Rajdhani', sans-serif;
   font-size: 0.85rem;
@@ -51,7 +51,7 @@
 }
 
 .navbar-menu a:hover {
-  color: #FF6A00;
+  color: var(--color-orange);
 }
 
 .inquire-btn {
@@ -70,7 +70,7 @@
 
 .inquire-btn:hover {
   background: #fff;
-  color: #000;
+  color: var(--color-black);
   border-color: #fff;
 }
 

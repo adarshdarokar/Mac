@@ -79,7 +79,7 @@ const Hero = () => {
           offsetX = Math.round(offsetX);
           offsetY = Math.round(offsetY);
           
-          context.fillStyle = '#0a0a0a';
+          context.fillStyle = '#1E1F22';
           context.fillRect(0, 0, canvas.width, canvas.height);
           
           context.imageSmoothingEnabled = true;
@@ -179,12 +179,12 @@ const Hero = () => {
 
   if (!loaded) {
     return (
-      <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#0a0a0a', color: '#FF6A00', fontFamily: 'Orbitron, sans-serif' }}>
+      <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#1E1F22', color: '#FF8B66', fontFamily: 'Orbitron, sans-serif' }}>
         <h2 style={{ letterSpacing: '4px', fontWeight: 600 }}>SYSTEM BOOT</h2>
-        <div style={{ width: '200px', height: '1px', background: '#1f1f1f', marginTop: '30px' }}>
-          <div style={{ width: `${loadingProgress}%`, height: '100%', background: '#FF6A00', transition: 'width 0.2s cubic-bezier(0.25, 1, 0.5, 1)' }}></div>
+        <div style={{ width: '200px', height: '1px', background: '#2B2D31', marginTop: '30px' }}>
+          <div style={{ width: `${loadingProgress}%`, height: '100%', background: '#FF8B66', transition: 'width 0.2s cubic-bezier(0.25, 1, 0.5, 1)' }}></div>
         </div>
-        <p style={{ marginTop: '20px', fontSize: '0.8rem', letterSpacing: '4px', color: '#888' }}>{loadingProgress}%</p>
+        <p style={{ marginTop: '20px', fontSize: '0.8rem', letterSpacing: '4px', color: '#A2A5AA' }}>{loadingProgress}%</p>
       </div>
     );
   }

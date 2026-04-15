@@ -1,6 +1,6 @@
 .specs-section {
   padding: 10vw 5%;
-  background-color: #0a0a0a;
+  background-color: var(--color-black);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -25,7 +25,7 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 1rem;
   font-weight: 600;
-  color: #888;
+  color: var(--color-gray);
   margin-bottom: 20px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -43,7 +43,7 @@
 .spec-value span {
   font-family: 'Rajdhani', sans-serif;
   font-size: 1.2rem;
-  color: #FF6A00;
+  color: var(--color-orange);
   letter-spacing: 0.1em;
   margin-left: 5px;
 }
@@ -56,7 +56,7 @@
 
 .spec-fill {
   height: 100%;
-  background-color: #FF6A00;
+  background-color: var(--color-orange);
   /* Removed glow for cleaner, minimalist professional look */
 }
 

@@ -1,5 +1,5 @@
 .footer {
-  background-color: #050505;
+  background-color: #151618;
   padding: 6vw 5% 2vw;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -21,7 +21,7 @@
 
 .footer-logo p {
   font-family: 'Rajdhani', sans-serif;
-  color: #666;
+  color: var(--color-gray);
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -51,7 +51,7 @@
 
 .link-group ul li a {
   font-family: 'Rajdhani', sans-serif;
-  color: #888;
+  color: var(--color-gray);
   text-decoration: none;
   transition: color 0.3s ease;
   font-size: 0.9rem;
@@ -59,7 +59,7 @@
 }
 
 .link-group ul li a:hover {
-  color: #FF6A00;
+  color: var(--color-orange);
 }
 
 .footer-bottom {
@@ -71,7 +71,7 @@
 }
 
 .footer-bottom p {
-  color: #444;
+  color: #5A5D64;
   font-size: 0.8rem;
   font-family: 'Rajdhani', sans-serif;
   letter-spacing: 0.1em;
@@ -84,7 +84,7 @@
 }
 
 .social-links a {
-  color: #888;
+  color: var(--color-gray);
   text-decoration: none;
   font-family: 'Orbitron', sans-serif;
   font-size: 0.8rem;

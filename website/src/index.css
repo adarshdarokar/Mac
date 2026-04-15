@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 
 :root {
-  --color-black: #0a0a0a;
-  --color-carbon: #101010;
-  --color-orange: #FF6A00;
+  --color-black: #1E1F22; /* Deep Charcoal Gray */
+  --color-carbon: #2B2D31; /* Lighter Charcoal */
+  --color-orange: #FF8B66; /* Mint Orange / Soft Vibrant Orange */
+  --color-orange-rgb: 255, 139, 102; /* For rgba usage */
   --color-white: #ffffff;
-  --color-gray: #a0a0a0;
+  --color-gray: #A2A5AA; /* Premium Gray */
 }
 
 * {

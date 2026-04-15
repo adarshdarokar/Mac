@@ -16,13 +16,14 @@ gsap.registerPlugin(ScrollTrigger);
 function App() {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.04, // Lower lerp for much smoother scrolling
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
+      wheelMultiplier: 0.8, // Slightly softer wheel
+      smoothTouch: true, // Enable smooth scrolling for touch
+      touchMultiplier: 1.5,
+      syncTouch: true,
     });
 
     lenis.on('scroll', ScrollTrigger.update);
