@@ -1,0 +1,106 @@
+.customization-panel {
+    min-height: 80vh;
+    background: radial-gradient(circle at center, #1E1F22 0%, var(--color-black) 100%);
+    padding: 10vh 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.customization-header {
+    text-align: center;
+    margin-bottom: 5vh;
+}
+
+.customization-header h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--color-white);
+    letter-spacing: 0.1em;
+}
+
+.customization-header p {
+    color: var(--color-gray);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+}
+
+.customization-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    gap: 3rem;
+}
+
+.car-preview {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    perspective: 1000px;
+}
+
+.base-car {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    transition: filter 0.5s ease;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
+    will-change: filter;
+}
+
+.color-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--color-carbon);
+    padding: 2rem 4rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.active-color-name h3 {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--color-white);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.swatches {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.swatch:hover {
+    transform: scale(1.1);
+}
+
+.swatch.active {
+    border-color: var(--color-white);
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+    .color-picker {
+        padding: 1.5rem 2rem;
+        border-radius: 20px;
+    }
+}

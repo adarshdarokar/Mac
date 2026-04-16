@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import VisualSection from './components/VisualSection';
-import Specs from './components/Specs';
+import HeroSection from './components/HeroSection';
+import ScrollStory from './components/ScrollStory';
+import CarShowcase from './components/CarShowcase';
+import SpecsSection from './components/SpecsSection';
+import PerformanceSection from './components/PerformanceSection';
+import CustomizationPanel from './components/CustomizationPanel';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -14,16 +16,18 @@ import Lenis from 'lenis';
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const cursorRef = useRef(null);
+
   useEffect(() => {
+    // Smooth scrolling using Lenis
     const lenis = new Lenis({
-      lerp: 0.04, // Lower lerp for much smoother scrolling
+      lerp: 0.05, 
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.8, // Slightly softer wheel
-      smoothTouch: true, // Enable smooth scrolling for touch
-      touchMultiplier: 1.5,
-      syncTouch: true,
+      wheelMultiplier: 1, 
+      smoothTouch: true,
+      touchMultiplier: 2,
     });
 
     lenis.on('scroll', ScrollTrigger.update);
@@ -31,21 +35,38 @@ function App() {
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
-
     gsap.ticker.lagSmoothing(0);
+
+    // Custom Cursor tracking
+    const onMouseMove = (e) => {
+      if (cursorRef.current) {
+        gsap.to(cursorRef.current, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.15,
+          ease: "power2.out"
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
 
     return () => {
       lenis.destroy();
+      window.removeEventListener('mousemove', onMouseMove);
     };
   }, []);
 
   return (
     <div className="app">
+      <div className="custom-cursor" ref={cursorRef}></div>
       <Navbar />
-      <Hero />
-      <Features />
-      <VisualSection />
-      <Specs />
+      <HeroSection />
+      <ScrollStory />
+      <CarShowcase />
+      <PerformanceSection />
+      <SpecsSection />
+      <CustomizationPanel />
       <Footer />
     </div>
   );

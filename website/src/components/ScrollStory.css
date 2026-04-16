@@ -1,0 +1,126 @@
+.scroll-story {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-black);
+}
+
+.story-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.story-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 30%, var(--color-black) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.story-hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10vw;
+}
+
+.hud-part {
+    position: absolute;
+    text-align: center;
+    color: var(--color-white);
+    will-change: transform, opacity;
+}
+
+.hud-part h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    text-shadow: 0px 4px 20px rgba(0,0,0,0.8);
+}
+
+.hud-part p {
+    font-size: 1.2rem;
+    color: var(--color-gray);
+    letter-spacing: 0.05em;
+}
+
+.hud-list {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.list-item {
+    background: rgba(43, 45, 49, 0.6);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.list-item h4 {
+    font-size: 0.9rem;
+    color: var(--color-orange);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.2rem;
+}
+
+.list-item span {
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+}
+
+/* Loading State */
+.scroll-loading-screen {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-black);
+    color: var(--color-orange);
+}
+
+.scroll-loading-screen h2 {
+    letter-spacing: 4px;
+}
+
+.progress-bar-container {
+    width: 200px;
+    height: 1px;
+    background: var(--color-carbon);
+    margin-top: 30px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--color-orange);
+    transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.scroll-loading-screen p {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    color: var(--color-gray);
+}
