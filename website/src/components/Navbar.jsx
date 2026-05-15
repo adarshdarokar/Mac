@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Navbar.css';
@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Navbar = memo(() => {
   const navRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -60,12 +61,21 @@ const Navbar = memo(() => {
         </svg>
         <h2>McLAREN</h2>
       </div>
-      <div className="navbar-menu">
-        <a href="#models">Models</a>
-        <a href="#design">Design</a>
-        <a href="#tech">Technology</a>
+      <div className={`navbar-menu ${isOpen ? 'open' : ''}`}>
+        <a href="#models" onClick={() => setIsOpen(false)}>Models</a>
+        <a href="#design" onClick={() => setIsOpen(false)}>Design</a>
+        <a href="#tech" onClick={() => setIsOpen(false)}>Technology</a>
         <button className="inquire-btn">INQUIRE</button>
       </div>
+      <button 
+        className={`menu-toggle ${isOpen ? 'open' : ''}`} 
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   );
 });

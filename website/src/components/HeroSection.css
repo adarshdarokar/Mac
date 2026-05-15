@@ -71,7 +71,8 @@
 .hero-content p {
   color: var(--color-gray);
   max-width: 600px;
-  font-size: 1.1rem;
+  width: 90%;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   letter-spacing: 0.05em;
   margin-top: 1rem;
 }

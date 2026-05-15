@@ -181,3 +181,27 @@
         gap: 3rem;
     }
 }
+
+@media (max-width: 480px) {
+    .digital-speed {
+        font-size: 4.5rem;
+        min-width: 140px;
+    }
+    
+    .gauge-container {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .gauge-center {
+        margin-top: 30px;
+    }
+    
+    .gear-text {
+        font-size: 2rem;
+    }
+    
+    .throttle-track {
+        height: 150px;
+    }
+}

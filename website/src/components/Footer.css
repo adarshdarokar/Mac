@@ -101,3 +101,20 @@
   .footer-top { flex-direction: column; gap: 4rem; }
   .footer-bottom { flex-direction: column-reverse; gap: 2rem; }
 }
+
+@media (max-width: 480px) {
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 2.5rem;
+  }
+  .link-group {
+    width: 40%;
+  }
+  .social-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .footer-logo p {
+    font-size: 0.8rem;
+  }
+}
