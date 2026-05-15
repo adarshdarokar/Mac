@@ -113,7 +113,11 @@
 
 @media (max-width: 768px) {
     .car-showcase {
-        padding: 5vh 5vw;
+        padding: 3rem 5vw;
+        min-height: auto;
+    }
+    .showcase-header {
+        margin-bottom: 2rem;
     }
     .hotspot-info {
         width: 200px;

@@ -176,9 +176,18 @@
 }
 
 @media (max-width: 768px) {
+    .performance-section {
+        padding: 4rem 5vw;
+        min-height: auto;
+    }
+    
+    .performance-content {
+        margin-bottom: 2rem;
+    }
+
     .dashboard-ui {
         flex-direction: column;
-        gap: 3rem;
+        gap: 1.5rem;
     }
 }
 

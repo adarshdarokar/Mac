@@ -98,11 +98,19 @@
 }
 
 @media (max-width: 1024px) {
-  .footer-top { flex-direction: column; gap: 4rem; }
+  .footer-top { flex-direction: column; gap: 3rem; margin-bottom: 3rem; }
   .footer-bottom { flex-direction: column-reverse; gap: 2rem; }
 }
 
+@media (max-width: 768px) {
+  .footer {
+    padding: 4rem 5% 2rem;
+  }
+}
+
 @media (max-width: 480px) {
+  .footer-top { gap: 2rem; margin-bottom: 2rem; }
+  
   .footer-links {
     flex-wrap: wrap;
     gap: 2.5rem;

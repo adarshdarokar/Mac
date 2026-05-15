@@ -84,6 +84,12 @@
 }
 
 @media (max-width: 768px) {
+    .specs-section {
+        padding: 4rem 5vw;
+    }
+    .specs-section .section-title {
+        margin-bottom: 2rem;
+    }
     .specs-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;

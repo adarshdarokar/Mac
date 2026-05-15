@@ -111,3 +111,12 @@
   color: var(--color-gray);
   text-transform: uppercase;
 }
+
+@media (max-width: 768px) {
+  .hero-content {
+    margin-top: 0;
+  }
+  .scroll-indicator {
+    bottom: 3vh;
+  }
+}
