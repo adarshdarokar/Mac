@@ -16,6 +16,12 @@ const CustomizationPanel = memo(() => {
     setActiveColor(color);
   }, []);
 
+  const handleImageLoad = useCallback(() => {
+    import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+      ScrollTrigger.refresh();
+    });
+  }, []);
+
   return (
     <section className="customization-panel" id="customization">
       <div className="customization-header">
@@ -33,6 +39,7 @@ const CustomizationPanel = memo(() => {
             style={{ filter: activeColor.filter }}
             loading="lazy"
             decoding="async"
+            onLoad={handleImageLoad}
           />
         </div>
 

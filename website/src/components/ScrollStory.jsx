@@ -253,7 +253,7 @@ const ScrollStory = memo(() => {
         scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
-            end: '+=300%', // pin for 3 viewport heights
+            end: window.innerWidth <= 768 ? '+=150%' : '+=300%', // Reduce pin duration on mobile
             pin: true,
             scrub: true, // Ultra-responsive sync
             invalidateOnRefresh: true, // Refresh layout on resize/orientation change

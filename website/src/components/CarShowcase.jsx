@@ -51,6 +51,10 @@ const CarShowcase = memo(() => {
     return () => ctx.revert();
   }, []);
 
+  const handleImageLoad = () => {
+    ScrollTrigger.refresh();
+  };
+
   return (
     <section className="car-showcase" ref={sectionRef}>
       <div className="showcase-header">
@@ -60,7 +64,14 @@ const CarShowcase = memo(() => {
       
       <div className="showcase-interactive">
         <div className="car-container" ref={carRef}>
-          <img src="/images/aero.png" alt="McLaren Aero" className="main-car-img" loading="lazy" decoding="async" />
+          <img 
+            src="/images/aero.png" 
+            alt="McLaren Aero" 
+            className="main-car-img" 
+            loading="lazy" 
+            decoding="async" 
+            onLoad={handleImageLoad}
+          />
           
           <div className="hotspot pos-1">
             <span className="dot"></span>
