@@ -33,6 +33,7 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: transform 0.3s ease, border-color 0.3s ease;
     will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 .spec-item:hover {
@@ -81,6 +82,7 @@
     width: 0%; /* Animated via GSAP */
     transform-origin: left;
     will-change: transform;
+    transform: translateZ(0);
 }
 
 @media (max-width: 768px) {

@@ -97,8 +97,32 @@
 }
 
 @media (max-width: 768px) {
+    .customization-panel {
+        padding: 4rem 5vw;
+        min-height: auto;
+    }
+
+    .customization-header {
+        margin-bottom: 2rem;
+    }
+
     .color-picker {
         padding: 1.5rem 2rem;
         border-radius: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .swatches {
+        gap: 1rem;
+    }
+    
+    .swatch {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .color-picker {
+        padding: 1.2rem;
     }
 }

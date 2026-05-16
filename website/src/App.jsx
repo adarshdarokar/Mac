@@ -39,8 +39,9 @@ function App() {
     gsap.ticker.lagSmoothing(0);
 
     // Custom Cursor tracking
-    const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.15, ease: "power2.out" });
-    const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.15, ease: "power2.out" });
+    gsap.set(cursorRef.current, { xPercent: -50, yPercent: -50 });
+    const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.15, ease: "power2.out", force3D: true });
+    const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.15, ease: "power2.out", force3D: true });
 
     const onMouseMove = (e) => {
       if (cursorRef.current) {
@@ -49,7 +50,7 @@ function App() {
       }
     };
 
-    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
 
     return () => {
       lenis.destroy();
