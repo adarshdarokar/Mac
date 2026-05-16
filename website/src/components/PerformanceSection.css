@@ -35,7 +35,6 @@
     gap: 4rem;
     width: 100%;
     max-width: 1000px;
-    transform: translateZ(0);
 }
 
 /* RPM Gauge */
@@ -71,7 +70,7 @@
     bottom: 50%;
     left: calc(50% - 2px);
     transform-origin: bottom center;
-    transform: rotate(-120deg) translateZ(0); /* initial state */
+    transform: rotate(-120deg); /* initial state */
     will-change: transform;
     z-index: 10;
     box-shadow: 0 0 10px var(--color-orange);
@@ -128,7 +127,6 @@
     font-variant-numeric: tabular-nums;
     min-width: 180px;
     text-align: center;
-    contain: layout paint;
 }
 
 .speed-unit {
@@ -164,7 +162,7 @@
     background: linear-gradient(to top, var(--color-orange), #ffb299);
     box-shadow: 0 0 15px rgba(255, 139, 102, 0.8);
     transform-origin: bottom;
-    transform: scaleY(0) translateZ(0);
+    transform: scaleY(0);
     will-change: transform;
 }
 

@@ -40,7 +40,6 @@
     position: relative;
     width: 100%;
     will-change: transform, opacity;
-    transform: translateZ(0);
 }
 
 .main-car-img {

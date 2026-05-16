@@ -14,7 +14,6 @@
     width: 100%;
     height: 100%;
     z-index: 1;
-    transform: translateZ(0);
 }
 
 .story-gradient-overlay {
@@ -26,7 +25,6 @@
     background: radial-gradient(circle at center, transparent 30%, var(--color-black) 100%);
     z-index: 2;
     pointer-events: none;
-    transform: translateZ(0);
 }
 
 .story-hud {
@@ -41,7 +39,6 @@
     align-items: center;
     justify-content: center;
     padding: 0 5vw;
-    transform: translateZ(0);
 }
 
 .hud-part {
@@ -50,7 +47,6 @@
     color: var(--color-white);
     will-change: transform, opacity;
     transform-origin: center center;
-    transform: translateZ(0);
 }
 
 .hud-part h2 {
